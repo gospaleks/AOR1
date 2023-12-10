@@ -1,3 +1,5 @@
+; MAKSIMALNI ELEMENT NIZA CIJI SU ELEMENTI 32b BROJEVI
+
 .386
 .model flat,c
 .data
@@ -20,14 +22,14 @@ maxEl proc
 		jle preskoci
 		mov eax, [esi]
 		preskoci:
-		add esi, 4		; +4 jer je dd
+		add esi, 4	; +4 jer je dd
 		loop petlja
 	
 	mov [edx], eax		; ubaci u rez u memoriju
 
 	popad
 	popfd
-	ret 8				; da skloni i n i niz sto su stavljeni na stek
+	ret 8			; da skloni i n i niz sto su stavljeni na stek
 maxEl endp
 
 main proc
