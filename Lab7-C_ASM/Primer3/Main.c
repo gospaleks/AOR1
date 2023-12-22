@@ -14,29 +14,29 @@ int prebroj(int niz, int brEl, int n) {
 		push esi
 		push edi
 
-		mov ebx, 1								// napravi 2^n - 1 
-		mov ecx, n								// to je maska 00001...1
+		mov ebx, 1					// napravi 2^n - 1 
+		mov ecx, n					// to je maska 00001...1
 		shl ebx, cl
 		dec ebx
 
 
-		mov edx, 0								// rez = 0
-		mov edi, [niz]							// u EBX ide &niz
-		mov ecx, brEl							// u ECX ide broj elemenata
+		mov edx, 					// rez = 0
+		mov edi, [niz]					// u EBX ide &niz
+		mov ecx, brEl					// u ECX ide broj elemenata
 		mov esi, 0
 		petlja:
 
 			movzx eax, word ptr [edi][esi]		// u EAX trenutni element niza, tj u AX
-			and eax, ebx						// and sa maskom
-			cmp eax, ebx						// ako se u EAX dobije isto kao maska to znaci da je nadjen
+			and eax, ebx				// and sa maskom
+			cmp eax, ebx				// ako se u EAX dobije isto kao maska to znaci da je nadjen
 			jnz dalje
-			inc edx								// rez++
+			inc edx					// rez++
 
 			dalje:
-			add esi, 2							// +2 jer su 16b elementi
+			add esi, 2				// +2 jer su 16b elementi
 			loop petlja
 
-		mov eax, edx							// rez uvek u eax
+		mov eax, edx					// rez uvek u eax
 
 		pop edi
 		pop esi
