@@ -32,7 +32,7 @@ main proc
 	; II kol 2021/22 zad 5 
 
 	
-	;	ebx						esi
+	;	ebx					esi
 	;	0		5 7 ->	7		0
 	;	8		3 1 ->	3		4
 	;	16		0 2 ->	2		8
@@ -40,15 +40,15 @@ main proc
 
 	lea esi, niz				; u esi adresa niza
 	xor ebx, ebx
-	mov ecx, n				  	; u sustini ovo je spoljasnja petlja koja prodje N puta
+	mov ecx, n				 ; u sustini ovo je spoljasnja petlja koja prodje N puta
 	petlja:
-								; unutrasnja petlja nema jer imamo samo dve kolone
+						; unutrasnja petlja nema jer imamo samo dve kolone
 		mov eax, MAT[ebx]		; uzmi prvi podatak
-		mov edx, MAT[ebx][4]	; uzmi drugi podatak
+		mov edx, MAT[ebx][4]		; uzmi drugi podatak
 		push esi
 		call max
 		
-		add esi, 4				; adresu niza povecavamo da znamo gde da upisemo s
+		add esi, 4			; adresu niza povecavamo da znamo gde da upisemo s
 		add ebx, 8
 		loop petlja
 
