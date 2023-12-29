@@ -27,7 +27,7 @@ sort proc
 	dec ecx
 	spo:
 		mov edi, esi
-		add edi, 4						; j = i + 1
+		add edi, 4					; j = i + 1
 		un:
 			mov ebx, [eax][esi]			; a = niz[i]
 			mov edx, [eax][edi]			; b = niz[j]
@@ -35,13 +35,13 @@ sort proc
 			jng nastavi
 			mov [eax][esi], edx			; zameni im mesta u memoriji
 			mov [eax][edi], ebx
-			nastavi:					; else nastavi
+			nastavi:				; else nastavi
 			push eax
 			mov eax, [ebp+8]			; u eax privremeno sacuvaj 4*N (ovo ne bi bio problem da je niz 8b)
 			shl eax, 2
 			add edi, 4
 			cmp edi, eax
-			pop eax		; pop ne ucite na flagove
+			pop eax					; pop ne ucite na flagove
 			jl un
 		add esi, 4
 		loop spo
@@ -57,12 +57,12 @@ main proc
 
 	xor edi, edi		; edi ce da prolazi kroz tmpNiz
 	
-	mov esi, n			; esi ide po sporednoj dijag, krece od 4n - 4
+	mov esi, n		; esi ide po sporednoj dijag, krece od 4n - 4
 	shl esi, 2
 	sub esi, 4
 	mov edx, esi		; u edx je skok
 
-	mov ecx, n			; petlja prolazi kroz dijagonalu i smesta sve u tmpNiz
+	mov ecx, n		; petlja prolazi kroz dijagonalu i smesta sve u tmpNiz
 	petlja:
 		mov eax, mat[esi]
 		mov tmpNiz[edi], eax
@@ -75,7 +75,7 @@ main proc
 
 	push offset tmpNiz
 	push n
-	call sort			; sortiraj tmpNiz
+	call sort		; sortiraj tmpNiz
 
 
 
