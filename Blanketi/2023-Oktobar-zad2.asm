@@ -20,9 +20,9 @@ najduza proc
 	mov edx, [ebp+16]				; adresa matrice
 	mov ecx, [ebp+12]				; n - br vrsta
 	xor ebx, ebx
-	spo:							; petlja koja ide po vrstama
+	spo:						; petlja koja ide po vrstama
 		xor esi, esi
-		blanko:						; ova petlja treba da preskoci sve blanko znake na pocetku
+		blanko:					; ova petlja treba da preskoci sve blanko znake na pocetku
 			mov al, [edx][esi]
 			cmp al, 32
 			jne dalje
@@ -31,13 +31,13 @@ najduza proc
 			jl blanko
 
 		dalje:
-		push ebx					; push ebx i pop ebx jer mi fale registri jbg
+		push ebx				; push ebx i pop ebx jer mi fale registri jbg
 		xor ebx, ebx				; rez za svaku vrstu je ovde (currentDuzina = 0)
 		slova:
 			mov al, [edx][esi]
 			cmp al, 32
 			je kraj
-			inc ebx					; povecaj duzinu reci ako nije doso do blanko
+			inc ebx				; povecaj duzinu reci ako nije doso do blanko
 			inc esi
 			cmp esi, [ebp+8]
 			jl slova
@@ -54,12 +54,12 @@ najduza proc
 		loop spo
 
 	mov eax, [ebp+20]
-	mov dword ptr [eax], edi		; smesti maxDuzina u memoriju
+	mov dword ptr [eax], edi			; smesti maxDuzina u memoriju
 
 	popad
 	popfd
 	pop ebp
-	ret 16							; 16 da skloni sve sa steka
+	ret 16						; 16 da skloni sve sa steka
 najduza endp
 main proc
 	
