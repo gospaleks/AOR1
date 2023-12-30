@@ -3,8 +3,8 @@
 .stack 4096
 .data
 	mat db "    abcddd"
-		db " aleksand "
-		db "  aoij    "
+	    db " aleksand "
+	    db "  aoij    "
 	n dd 3
 	m dd 10
 	rez dd ?
