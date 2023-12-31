@@ -8,7 +8,7 @@
 		dw 4, 8, 10
 	n dw 4
 	m dw 3
-	rez dd ?			; ocekivan rez je 5
+	rez dd ?				; ocekivan rez je 5
 .code
 main proc
 	
@@ -28,9 +28,9 @@ main proc
 	movzx eax, n
 	movzx ecx, m
 	mul ecx
-	mov ecx, eax		; u ECX broj proslaska (n*m)
+	mov ecx, eax				; u ECX broj proslaska (n*m)
 
-	xor edx, edx		; u EDX je rez koji posle smestam u memoriju
+	xor edx, edx				; u EDX je rez koji posle smestam u memoriju
 	xor esi, esi
 	petlja:
 		movzx eax, word ptr mat[esi]
