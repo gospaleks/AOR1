@@ -14,21 +14,22 @@ unsigned int bcdtoi(const char* niz, const unsigned int n) {
 		// ESI - adresa tr elementa
 		// ECX - n
 		// EDI - suma koja se na kraju mora smesti u EAX
+
 		xor edi, edi
 		mov esi, niz				// adresa niza u ESI
-		mov ecx, n					// broj elemenata niza u ECX zbog loop
-		mov ebx, 1					// stepen (10^0, 10^1, 10^2...)	
+		mov ecx, n				// broj elemenata niza u ECX zbog loop
+		mov ebx, 1				// stepen (10^0, 10^1, 10^2...)	
 
 		petlja:
 			cmp [esi], 10			// cifra mora da bude 0-9
 			jnl lose
 
 			movzx eax, byte ptr [esi]
-			mul ebx					// cifra * stepen
+			mul ebx				// cifra * stepen
 				cmp edx, 0
-				jne lose				// ako je mnozenje otislo u edx znaci da je rez veci od 32b
+				jne lose			// ako je mnozenje otislo u edx znaci da je rez veci od 32b
 			add edi, eax
-				jc lose					// ako zbir da carry odma kraj jer ne moze stane u 32b
+				jc lose				// ako zbir da carry odma kraj jer ne moze stane u 32b
 			xor edx, edx			// anuliraj edx zbog mnozenje
 
 			mov eax, ebx
@@ -54,7 +55,7 @@ int main()
 
 	scanf_s("%d", &n);
 	for (int i = 0; i < n; ++i)
-		scanf_s("%d", &niz[i]);		// niz char da bi bilo byte al unosimo %d 
+		scanf_s("%d", &niz[i]);			// niz char da bi bilo byte al unosimo %d 
 	
 	unsigned int rez = bcdtoi(niz, n);
 
