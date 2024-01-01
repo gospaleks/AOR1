@@ -1,7 +1,7 @@
 .386
 .model flat, c
 .stack 4096
-.data
+.data 
 	mat db 1, 10, 6, 13
 		db 5, 6, 7, 8
 		db 9, 5, 5, 5
