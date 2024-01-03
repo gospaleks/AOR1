@@ -1,5 +1,6 @@
 .386
 .model flat, c
+public transformisi
 .code
 transformisi proc
 	push ebp
