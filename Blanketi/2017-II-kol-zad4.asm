@@ -58,8 +58,8 @@ main proc
 		cmp ebx, 3
 		je kraj
 		
-										; spec slucaj
-		cmp ebx, 5						; ako je tacka ispred nje odma povecaj slovo
+								; spec slucaj
+		cmp ebx, 5					; ako je tacka ispred nje odma povecaj slovo
 		jne nastavi
 		mov edi, esi
 		dec edi
@@ -69,11 +69,11 @@ main proc
 		jmp dalje
 
 		nastavi:
-		cmp ebx, 4						; ako je blanko proveri iza i ispred dal je malo slovo
+		cmp ebx, 4					; ako je blanko proveri iza i ispred dal je malo slovo
 		jne nijeBlanko					; ako nije samo idi dalje
 		mov edi, esi		
 		dec edi	
-		movzx eax, byte ptr ASC[edi]	; ovde u EAX karakter ispred
+		movzx eax, byte ptr ASC[edi]			; ovde u EAX karakter ispred
 		call vratiOznaku
 		cmp ebx, 2
 		jne proveriIza
@@ -84,16 +84,16 @@ main proc
 		proveriIza:
 		mov edi, esi
 		inc edi
-		movzx eax, byte ptr ASC[edi]	; ovde u EAX karakter iza
+		movzx eax, byte ptr ASC[edi]			; ovde u EAX karakter iza
 		call vratiOznaku
 		cmp ebx, 2
 		jne dalje
-		sub eax, 32						; -32 jer tolko je razlika u ASCII tabelu
+		sub eax, 32					; -32 jer tolko je razlika u ASCII tabelu
 		mov ASC[edi], al				; ako je malo slovo promeni ga u veliko
 
 		dalje:
 		nijeBlanko:
-		inc esi							; predji na sledeci
+		inc esi						; predji na sledeci
 		jmp petlja
 
 	kraj:
