@@ -14,6 +14,9 @@ main proc
 	
 	; 2022/23 II kol zad 4.
 
+	; ovo je greskom smesteno po vrstama a treba po kolonama
+	; onda pronalazenje pretposlednjeg je lakse - samo 4n-4
+
 	; da dobijem drugi element u pretposlednjoj vrsti
 	; ebx je (2*m * (n-2)) i dodam 2 jer je druga kolona
 	movzx ebx, m
