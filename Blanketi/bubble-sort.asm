@@ -48,7 +48,7 @@ sort proc
 	popad
 	popfd
 	pop ebp
-	ret
+	ret 8
 sort endp
 main proc
 	
