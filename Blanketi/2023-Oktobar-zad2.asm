@@ -18,7 +18,6 @@ najduza proc
 
 	mov ebx, [ebp+16]				; &mat
 	mov ecx, [ebp+12]				; n
-	mov edx, [ebp+8]				; m
 
 	xor dl, dl						; u DL maxDuzinaReci
 	xor dh, dh						; u DH indeks trenutne vrste
@@ -54,7 +53,7 @@ najduza proc
 		dalje:
 
 		inc dh
-		add ebx, m
+		add ebx, [ebp+8]			; skok za m
 		loop slVrsta
 
 	mov [ebp+16], edi				; rez izlazni parametar preko steka po vrednsoti
