@@ -6,7 +6,7 @@
 .code
 main proc
 
-  ; 2016 II kol zad 6
+  ; 2016 II kol zad 5
   ; znam da ima resenja al nisam se ni trudio da pokusavam da razumem
   ; ovo je nesto moje, ima malo da je spageti kod al jbg tu smo da se edukujemo
   ; bitno da radi
