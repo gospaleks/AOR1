@@ -1,11 +1,12 @@
 .386
-.model flat,c
+.model flat, c
 .stack 4096
 .data
-	mat db "    abcddd"
-	    db " aleksand "
-	    db "  aoij    "
-	n dd 3
+	mat db "      addd"
+	    db " aland    "
+	    db "  najduza "				; indeks je 2
+	    db "    rec   "
+	n dd 4
 	m dd 10
 	rez dd ?
 .code
@@ -15,61 +16,64 @@ najduza proc
 	pushfd
 	pushad
 
-	xor edi, edi					; konacan rez je ovde (maxDuzina = 0)
-	xor eax, eax
-	mov edx, [ebp+16]				; adresa matrice
-	mov ecx, [ebp+12]				; n - br vrsta
-	xor ebx, ebx
-	spo:						; petlja koja ide po vrstama
-		xor esi, esi
-		blanko:					; ova petlja treba da preskoci sve blanko znake na pocetku
-			mov al, [edx][esi]
-			cmp al, 32
-			jne dalje
-			inc esi
-			cmp esi, [ebp+8]
-			jl blanko
+	mov ebx, [ebp+16]				; &mat
+	mov ecx, [ebp+12]				; n
+	mov edx, [ebp+8]				; m
 
+	xor dl, dl						; u DL maxDuzinaReci
+	xor dh, dh						; u DH indeks trenutne vrste
+	xor edi, edi					; konacni rez (tj broj vrste gde je najduza rec)
+
+	slVrsta:
+		xor esi, esi				; ESI ide po kolonama (j-indeks)
+		dec esi
+
+									; Preskoci blanko znake na pocetku ako ih ima
+		iDaljeBlanko:
+			inc esi
+			mov al, [ebx][esi]
+			cmp al, 32
+			je iDaljeBlanko
+
+									; Izracunaj koliko slova ima rec -> u AH je duzina reci
+		dec esi
+		xor ah, ah
+		iDaljeSlova:
+			inc esi
+			mov al, [ebx][esi]
+			inc ah
+			cmp al, 32
+			jne iDaljeSlova
+
+		dec ah						; ovaj dec je da vrati u libelu jer ona iznad petlja predje jedan preko
+
+		cmp ah, dl					; Ako je duzina duza od trenutne najduze update-uj rez
+		jle dalje
+		mov dl, ah
+		movzx edi, dh
 		dalje:
-		push ebx				; push ebx i pop ebx jer mi fale registri jbg
-		xor ebx, ebx				; rez za svaku vrstu je ovde (currentDuzina = 0)
-		slova:
-			mov al, [edx][esi]
-			cmp al, 32
-			je kraj
-			inc ebx				; povecaj duzinu reci ako nije doso do blanko
-			inc esi
-			cmp esi, [ebp+8]
-			jl slova
 
-		kraj:
-		cmp ebx, edi				; u C je ovo -> if (currentDuzina > maxDuzina) maxDuzina = currentDuzina;
-		jl dalje2
-		mov edi, ebx
-		dalje2:
-		pop ebx
+		inc dh
+		add ebx, m
+		loop slVrsta
 
-		add edx, [ebp+8]
-		add ebx, [ebp+8]
-		loop spo
-
-	mov eax, [ebp+20]
-	mov dword ptr [eax], edi			; smesti maxDuzina u memoriju
+	mov [ebp+16], edi				; rez izlazni parametar preko steka po vrednsoti
 
 	popad
 	popfd
 	pop ebp
-	ret 16						; 16 da skloni sve sa steka
+	ret 8
 najduza endp
 main proc
-	
-	; Oktobar 2023 - zad 2.
 
-	push offset rez
+	; 2023 Oktobar zad 2.
+
 	push offset mat
 	push n
 	push m
 	call najduza
+	pop eax
+	mov rez, eax
 
 	nop
 	ret
