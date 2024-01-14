@@ -5,10 +5,9 @@
 	; stavio sam sve jedinice ostalo da bi bolje video u memoriju sta se desava
 	mat dd 1, 1, 1, 9
 		dd 1, 1, 5, 1
-		dd 1, 4, 1, 1
-		dd 1, 1, 1, 1
+		dd 1, 7, 1, 1
+		dd 10, 1, 1, 1
 	n dd 4
-	tmpNiz dd 10 dup(?)
 .code
 
 ; procedura prihvata ulazne podatke preko steka
@@ -32,7 +31,7 @@ sort proc
 			mov ebx, [eax][esi]			; a = niz[i]
 			mov edx, [eax][edi]			; b = niz[j]
 			cmp ebx, edx				; if (a > b)
-			jng nastavi
+			jnl nastavi
 			mov [eax][esi], edx			; zameni im mesta u memoriji
 			mov [eax][edi], ebx
 			nastavi:				; else nastavi
@@ -53,41 +52,53 @@ sort proc
 sort endp
 main proc	
 	
-	; Jun 2023 - 2.zad
+						; stavi sporednu dijagonalu u prvu vrstu
+	mov ebx, n
+	shl ebx, 2	
+	sub ebx, 4				; u EBX je skok 4*n-4 za prolazak kroz sporednu dijagonalu
 
-	xor edi, edi		; edi ce da prolazi kroz tmpNiz
-	
-	mov esi, n		; esi ide po sporednoj dijag, krece od 4n - 4
-	shl esi, 2
-	sub esi, 4
-	mov edx, esi		; u edx je skok
+	mov eax, n
+	mul eax
+	shl eax, 2
+	sub eax, ebx
+	sub eax, 4				; U EAX indeks elementa koji je skroz dole levo
+	push eax				; push eax da ne bi ponovo posle racunao za vracanje
 
-	mov ecx, n		; petlja prolazi kroz dijagonalu i smesta sve u tmpNiz
+	xor esi, esi
+	mov ecx, n
 	petlja:
-		mov eax, mat[esi]
-		mov tmpNiz[edi], eax
-		
-		add edi, 4
-		add esi, edx
+		mov edx, mat[eax]
+		mov edi, mat[esi]
+		mov mat[esi], edx
+		mov mat[eax], edi 
+
+		sub eax, ebx
+		add esi, 4
 		loop petlja
 
 
 
-	push offset tmpNiz
+	push offset mat
 	push n
-	call sort		; sortiraj tmpNiz
+	call sort					; sortiraj prvu vrstu
 
 
 
-	xor edi, edi		; sada samo vratimo u matricu slicno kao gornja petlja
-	mov esi, edx
+							; vrati sporednu dijagonalu
+	pop						; pop eax da ne bi ponovo racunao
+	xor esi, esi
 	mov ecx, n
 	petlja1:
-		mov eax, tmpNiz[edi]
-		mov mat[esi], eax
-		add edi, 4
-		add esi, edx
+		mov edx, mat[eax]
+		mov edi, mat[esi]
+		mov mat[esi], edx
+		mov mat[eax], edi 
+
+		sub eax, ebx
+		add esi, 4
 		loop petlja1
+
+
 
 	nop
 	ret
