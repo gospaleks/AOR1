@@ -19,30 +19,25 @@ sort proc
 	pushfd
 	pushad
 
-	mov eax, [ebp+12]			; u EAX je adresa niza
+	; kao neki bubble sort
 
-	xor esi, esi
-	mov ecx, [ebp+8]
-	dec ecx
+	mov ecx, n
 	spo:
-		mov edi, esi
-		add edi, 4					; j = i + 1
+		push ecx
+		mov esi, [ebp+12]				; adresa prvog elementa niza
+		mov ecx, n
+		dec ecx
 		un:
-			mov ebx, [eax][esi]			; a = niz[i]
-			mov edx, [eax][edi]			; b = niz[j]
-			cmp ebx, edx				; if (a > b)
-			jnl nastavi
-			mov [eax][esi], edx			; zameni im mesta u memoriji
-			mov [eax][edi], ebx
-			nastavi:				; else nastavi
-			push eax
-			mov eax, [ebp+8]			; u eax privremeno sacuvaj 4*N (ovo ne bi bio problem da je niz 8b)
-			shl eax, 2
-			add edi, 4
-			cmp edi, eax
-			pop eax					; pop ne ucite na flagove
-			jl un
-		add esi, 4
+			mov eax, [esi]
+			mov ebx, [esi][4]
+			cmp eax, ebx				; poredi susedna dva
+			jnl dalje
+			mov [esi], ebx				; zameni im mesta ako je prvi veci od drugog
+			mov [esi][4], eax
+			dalje:
+			add esi, 4					
+			loop un
+		pop ecx
 		loop spo
 
 	popad
@@ -52,7 +47,7 @@ sort proc
 sort endp
 main proc	
 	
-						; stavi sporednu dijagonalu u prvu vrstu
+							; stavi sporednu dijagonalu u prvu vrstu
 	mov ebx, n
 	shl ebx, 2	
 	sub ebx, 4				; u EBX je skok 4*n-4 za prolazak kroz sporednu dijagonalu
@@ -80,12 +75,12 @@ main proc
 
 	push offset mat
 	push n
-	call sort					; sortiraj prvu vrstu
+	call sort				; sortiraj prvu vrstu
 
 
 
 							; vrati sporednu dijagonalu
-	pop						; pop eax da ne bi ponovo racunao
+	pop	eax					; pop eax da ne bi ponovo racunao
 	xor esi, esi
 	mov ecx, n
 	petlja1:
