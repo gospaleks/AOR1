@@ -21,7 +21,7 @@ sort proc
 
 	; kao neki bubble sort
 
-	mov ecx, n
+	mov ecx, [ebp+8]
 	spo:
 		push ecx
 		mov esi, [ebp+12]				; adresa prvog elementa niza
