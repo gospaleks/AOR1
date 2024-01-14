@@ -26,11 +26,11 @@ sort proc
 
 	; algoritam moze da se poboljsa tako da unutrasnja petlja ide od 0 do n-i-1 al to komplikuje s registri samo
 
-	mov ecx, n
+	mov ecx, [ebp+8]
 	spo:
 		push ecx
 		mov esi, [ebp+12]				; adresa prvog elementa niza
-		mov ecx, n
+		mov ecx, [ebp+8]
 		dec ecx
 		un:
 			mov eax, [esi]
