@@ -25,7 +25,7 @@ sort proc
 	spo:
 		push ecx
 		mov esi, [ebp+12]				; adresa prvog elementa niza
-		mov ecx, n
+		mov ecx, [ebp+8]
 		dec ecx
 		un:
 			mov eax, [esi]
